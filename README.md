@@ -1,5 +1,5 @@
 <div align="center">
-    <img src="./public/readme.jpg" /> 
+    <img src="./readme.jpg" /> 
   <h3>
     <strong>Rodri Trello</strong>
   </h3>
