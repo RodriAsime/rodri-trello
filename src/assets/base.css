@@ -1,0 +1,43 @@
+/* color palette from <https://github.com/vuejs/theme> */
+:root {
+  --misty-rose: rgb(255, 229, 236);
+  --pink: rgb(255, 194, 209);
+  --cherry-blossom-pink: rgb(255, 179, 198);
+  --baker-miller-pink: rgb(255, 143, 171);
+  --rose-pompadur: rgb(251, 111, 146);
+
+  --semi-transparent: rgba(0, 0, 0, 0.1);
+  --semi-transparent-dark: rgba(0, 0, 0, 0.5);
+  
+  --pure-white: rgb(255, 255, 255);
+  --pure-black: rgb(0, 0, 0);
+  --light-gray: rgb(220, 220, 220);
+
+}
+
+/* semantic color variables for this project */
+:root {
+
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+
+  }
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+}
+
+body{
+  background: linear-gradient(to right top, var(--rose-pompadur) 0%, var(--baker-miller-pink) 100%);
+  background-repeat: no-repeat;
+  min-height: 100vh;
+}

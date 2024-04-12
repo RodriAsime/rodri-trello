@@ -1,0 +1,11 @@
+- [] Add all field to tasks
+- [] Finish TaskInfo - Modal
+- [] Modal add new task
+- [] Add Save Button to TaskInfo - Modal for not to update all the time
+- [] New Drag & Drop system
+- [] Create columns
+- [] Save your tasks (¿link or localstorage?)(if localstorage -> import system)
+- [] Add MORE animations
+- [] Color switcher
+- [] Review styles
+- [] Responsive
