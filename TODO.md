@@ -9,3 +9,4 @@
 - [] Color switcher
 - [] Review styles
 - [] Responsive
+- [] Error detection and correction
