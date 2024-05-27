@@ -1,4 +1,5 @@
 import type { DirectiveBinding } from 'vue'
+import type { CustomHTMLElement } from '@/interfaces/directive'
 
 const handler = (e: MouseEvent, el: HTMLElement, binding?: DirectiveBinding) => {
   if (!el.contains(e.target as Node) && binding?.value) {
@@ -7,10 +8,16 @@ const handler = (e: MouseEvent, el: HTMLElement, binding?: DirectiveBinding) => 
 }
 
 export const outsiteClick = {
-  mounted(el: HTMLElement, binding: DirectiveBinding) {
-    document.addEventListener('click', (e) => handler(e, el, binding))
+  mounted(el: CustomHTMLElement, binding: DirectiveBinding) {
+    const eventHandler = (e: MouseEvent) => handler(e, el, binding)
+    el.__vueOutsideClickHandler__ = eventHandler
+    document.addEventListener('click', eventHandler)
   },
-  beforeUnmount: (el: HTMLElement) => {
-    document.removeEventListener('click', (e) => handler(e, el))
+  beforeUnmount(el: CustomHTMLElement) {
+    const eventHandler = el.__vueOutsideClickHandler__
+    if (eventHandler) {
+      document.removeEventListener('click', eventHandler)
+      delete el.__vueOutsideClickHandler__
+    }
   }
 }
