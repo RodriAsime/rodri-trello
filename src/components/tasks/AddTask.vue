@@ -27,7 +27,7 @@ defineProps<{
   overflow: hidden;
   border-radius: 0.5rem;
   background-color: var(--color-white);
-  box-shadow: 0 0 0.5rem rgba(0, 0, 0, 0.1);
+  box-shadow: 0 0 0.5rem var(--semi-transparent);
   border: 0.125rem dashed var(--semi-transparent);
   cursor: pointer;
 }

@@ -26,12 +26,11 @@ const closeList = () => {
 <style scoped>
 .selector {
   display: grid;
-  box-shadow: 0 0 0.1rem 0.1rem var(--semi-transparent-dark);
   position: relative;
   padding: 0.5rem;
   cursor: pointer;
-  border-radius: 0.3rem;
   min-width: 7rem;
+  border-bottom: 0.1rem solid var(--semi-transparent-dark);
 }
 .selector__actual {
   display: block;
@@ -44,8 +43,7 @@ const closeList = () => {
   position: absolute;
   top: 0;
   width: 100%;
-  background-color: var(--pure-white);
-  box-shadow: 0 0 0.1rem 0.1rem var(--semi-transparent-dark);
+  background-color: var(--pink);
 }
 .selector__item {
   cursor: pointer;

@@ -15,17 +15,6 @@
 
 }
 
-/* semantic color variables for this project */
-:root {
-
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-
-  }
-}
-
 *,
 *::before,
 *::after {
@@ -37,7 +26,12 @@
 }
 
 body{
-  background: linear-gradient(to right top, var(--rose-pompadur) 0%, var(--baker-miller-pink) 100%);
+  background: linear-gradient(to left top,
+  var(--misty-rose),
+  var(--pink),
+  var(--cherry-blossom-pink),
+  var(--baker-miller-pink),
+  var(--rose-pompadur));
   background-repeat: no-repeat;
   min-height: 100vh;
 }
