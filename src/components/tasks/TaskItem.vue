@@ -21,7 +21,10 @@ defineProps<{
     @click="openInfoModal($props.task)"
   >
     <header class="task-item__header">
-      <h3 class="task-item__title"><slot name="name" /><TypeTaskIcon :type="task.type" /></h3>
+      <h3 class="task-item__title">
+        <p class="task-item__title-name"><slot name="name" /></p>
+        <TypeTaskIcon :type="task.type" />
+      </h3>
       <span class="task-item__options"><TaskPriority :priority="task.priority" /></span>
     </header>
     <section class="task-item__content">
@@ -40,7 +43,8 @@ defineProps<{
   padding: 1rem;
   border-radius: 0.5rem;
   background-color: var(--color-white);
-  box-shadow: 0 0 0.5rem rgba(0, 0, 0, 0.1);
+  box-shadow: 0 0 0.5rem var(--semi-transparent);
+  overflow: hidden;
   &:hover {
     cursor: pointer;
   }
@@ -55,9 +59,17 @@ defineProps<{
   margin: 0;
   font-size: 1.5rem;
   font-weight: 500;
-  display: flex;
+  display: grid;
+  grid-template-columns: 1fr 14px;
   gap: 0.25rem;
+  max-width: 100%;
   align-items: center;
+  overflow: hidden;
+}
+.task-item__title-name {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: pre;
 }
 .task-item__options {
   display: flex;
@@ -74,6 +86,8 @@ defineProps<{
   -webkit-box-orient: vertical;
   overflow: hidden;
   width: 100%;
+  text-overflow: ellipsis;
+  white-space: pre;
 }
 .task-item__footer {
   display: flex;
