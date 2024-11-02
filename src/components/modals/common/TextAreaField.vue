@@ -1,20 +1,20 @@
 <script setup lang="ts">
 import { defineModel } from 'vue'
-defineProps({
-  ariaLabel: { type: String, required: true },
-  placeholder: { type: String, required: false, default: '' },
-  type: { type: String, required: false, default: 'text' }
-})
 
-const textareaValue = defineModel({ required: true })
+withDefaults(
+  defineProps<{
+    ariaLabel?: string
+    placeholder: string
+  }>(),
+  {
+    placeholder: ''
+  }
+)
+
+const textareaValue = defineModel<string>({ required: true })
 </script>
 <template>
-  <textarea
-    class="main-textarea"
-    :type="type"
-    v-model="textareaValue"
-    :placeholder="placeholder"
-  ></textarea>
+  <textarea class="main-textarea" v-model="textareaValue" :placeholder="placeholder"></textarea>
 </template>
 
 <style scoped>

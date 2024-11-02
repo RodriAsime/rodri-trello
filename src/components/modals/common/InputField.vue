@@ -1,12 +1,19 @@
-<script setup>
+<script setup lang="ts">
 import { defineModel } from 'vue'
-defineProps({
-  ariaLabel: { type: String, required: true },
-  placeholder: { type: String, required: false, default: '' },
-  type: { type: String, required: false, default: 'text' }
-})
 
-const inputValue = defineModel({ required: true })
+withDefaults(
+  defineProps<{
+    ariaLabel?: string
+    placeholder: string
+    type?: string
+  }>(),
+  {
+    placeholder: '',
+    type: 'text'
+  }
+)
+
+const inputValue = defineModel<string>({ required: true })
 </script>
 <template>
   <input class="main-input" :type="type" v-model="inputValue" :placeholder="placeholder" />
