@@ -1,7 +1,9 @@
 import { TASK_TYPE } from '@/constants/task'
 
+export type ID = `${string}-${string}-${string}-${string}-${string}`
+
 export interface Task {
-  id: number
+  id: ID
   name: string
   description: string
   status: keyof typeof TASK_TYPE

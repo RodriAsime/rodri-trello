@@ -1,15 +1,17 @@
 <script setup lang="ts">
-import type { Task } from '@/interfaces/task'
+import type { Task, ID } from '@/interfaces/task'
 import { drag } from '@/utils/dragAndDrop'
-import { openInfoModal } from '@/composables/modal'
+import { useModal } from '@/composables/modal'
 import { useTasksStore } from '@/stores/tasks'
 import TypeTaskIcon from './TypeTaskIcon.vue'
 import TaskPriority from './TaskPriority.vue'
 
 defineProps<{
-  id: number
+  id: ID
   task: Task
 }>()
+
+const { openInfoModal } = useModal()
 </script>
 <template>
   <article

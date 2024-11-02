@@ -2,11 +2,11 @@
 import { useModal } from '@/composables/modal'
 import { useTasksStore } from '@/stores/tasks'
 import { TASK_PRIORITY, TASK_TYPE } from '@/constants/task'
-import PrioritySelector from './task-info/PrioritySelector.vue'
-import ProgressSelector from './task-info/ProgressSelector.vue'
-import InputField from './common/InputField.vue'
-import TextAreaField from './common/TextAreaField.vue'
-import MainButton from '../common/MainButton.vue'
+import PrioritySelector from '../task-info/PrioritySelector.vue'
+import ProgressSelector from '../task-info/ProgressSelector.vue'
+import InputField from '../common/InputField.vue'
+import TextAreaField from '../common/TextAreaField.vue'
+import MainButton from '@/components/common/MainButton.vue'
 
 const { selectedTask } = useModal()
 
@@ -49,7 +49,6 @@ const handleSave = () => {
     </footer>
   </form>
 </template>
-
 <style scoped>
 .task-info {
   display: block;

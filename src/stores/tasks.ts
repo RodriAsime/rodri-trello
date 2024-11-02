@@ -1,12 +1,12 @@
 import { defineStore, acceptHMRUpdate } from 'pinia'
 import { reactive, computed } from 'vue'
-import type { Task } from '@/interfaces/task'
-import { TASK_TYPE, TASK_PRIORITY } from '@/constants/task'
+import type { Task, ID } from '@/interfaces/task'
+import { TASK_TYPE } from '@/constants/task'
 
 export const useTasksStore = defineStore('tasks', () => {
   const tasks = reactive<Task[]>([
     {
-      id: 1,
+      id: crypto.randomUUID(),
       name: 'Task 1',
       description: 'Description 1',
       status: 'todo',
@@ -14,7 +14,7 @@ export const useTasksStore = defineStore('tasks', () => {
       priority: 'low'
     },
     {
-      id: 2,
+      id: crypto.randomUUID(),
       name: 'Task 2',
       description: 'Description 2',
       status: 'in_progress',
@@ -22,7 +22,7 @@ export const useTasksStore = defineStore('tasks', () => {
       priority: 'medium'
     },
     {
-      id: 3,
+      id: crypto.randomUUID(),
       name: 'Task 3',
       description: 'Description 3',
       status: 'test',
@@ -30,7 +30,7 @@ export const useTasksStore = defineStore('tasks', () => {
       priority: 'high'
     },
     {
-      id: 4,
+      id: crypto.randomUUID(),
       name: 'Task 4',
       description: 'Description 4',
       status: 'revision',
@@ -38,7 +38,7 @@ export const useTasksStore = defineStore('tasks', () => {
       priority: 'medium'
     },
     {
-      id: 5,
+      id: crypto.randomUUID(),
       name: 'Task 5',
       description: 'Description 5',
       status: 'done',
@@ -46,7 +46,7 @@ export const useTasksStore = defineStore('tasks', () => {
       priority: 'low'
     },
     {
-      id: 6,
+      id: crypto.randomUUID(),
       name: 'Task 6',
       description: 'Description 6',
       status: 'done',
@@ -54,7 +54,7 @@ export const useTasksStore = defineStore('tasks', () => {
       priority: 'high'
     },
     {
-      id: 7,
+      id: crypto.randomUUID(),
       name: 'Task 7',
       description: 'Description 7',
       status: 'done',
@@ -65,38 +65,30 @@ export const useTasksStore = defineStore('tasks', () => {
 
   const getTasks = computed(() => tasks)
 
-  const addTask = (status: keyof typeof TASK_TYPE) => {
+  const addTask = (newTask: Omit<Task, 'id'>) => {
     const task: Task = {
-      id: tasks.length + 1,
-      name: `Task ${tasks.length + 1}`,
-      description: `Description ${tasks.length + 1}`,
-      status: status,
-      type: 'task',
-      priority: 'low'
+      id: crypto.randomUUID(),
+      ...newTask
     }
     tasks.push(task)
   }
 
-  const removeTask = (id: number) => {
+  const removeTask = (id: ID) => {
     const index = tasks.findIndex((task) => task.id === id)
     tasks.splice(index, 1)
   }
 
-  const updateTaskPriority = (id: number, priority: keyof typeof TASK_PRIORITY) => {
-    const index = tasks.findIndex((task) => task.id === id)
-    tasks[index].priority = priority
-  }
-  const updateTaskStatus = (id: number, status: keyof typeof TASK_TYPE) => {
+  const updateTaskStatus = (id: ID, status: keyof typeof TASK_TYPE) => {
     const index = tasks.findIndex((task) => task.id === id)
     tasks[index].status = status
   }
 
   const updateTask = (task: Task) => {
-    const index = tasks.findIndex((t) => t.id === task.id)
+    const index = tasks.findIndex(({ id }) => id === task.id)
     tasks[index] = task
   }
 
-  const getTaskIndexById = (id: number) => tasks.findIndex((task) => task.id === id)
+  const getTaskIndexById = (id: ID) => tasks.findIndex((task) => task.id === id)
 
   const moveTaskToPosition = (fromIndex: number, toIndex: number) => {
     const taskToMove = tasks.splice(fromIndex, 1)[0]
@@ -105,8 +97,8 @@ export const useTasksStore = defineStore('tasks', () => {
 
   const orderTasks = (overTask: DragEvent, dropTask: HTMLElement) => {
     if (!(overTask.target instanceof HTMLElement)) return
-    const overId = Number(overTask.target.dataset.text)
-    const dropId = Number(dropTask.dataset.text)
+    const overId = overTask.target.dataset.text as ID
+    const dropId = dropTask.dataset.text as ID
 
     const mouseY = overTask.clientY
     const dropTaskRect = dropTask.getBoundingClientRect()
@@ -127,7 +119,6 @@ export const useTasksStore = defineStore('tasks', () => {
     removeTask,
     updateTask,
     updateTaskStatus,
-    updateTaskPriority,
     orderTasks
   }
 })

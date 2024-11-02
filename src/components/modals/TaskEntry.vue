@@ -1,51 +1,68 @@
 <script setup lang="ts">
 import { useModal } from '@/composables/modal'
+import type { Task } from '@/interfaces/task'
 import { useTasksStore } from '@/stores/tasks'
 import { TASK_PRIORITY, TASK_TYPE } from '@/constants/task'
-import PrioritySelector from './task-info/PrioritySelector.vue'
-import ProgressSelector from './task-info/ProgressSelector.vue'
+import { ref, shallowReactive } from 'vue'
 import InputField from './common/InputField.vue'
 import TextAreaField from './common/TextAreaField.vue'
+import ProgressSelector from './task-info/ProgressSelector.vue'
+import PrioritySelector from './task-info/PrioritySelector.vue'
 import MainButton from '../common/MainButton.vue'
 
-const { selectedTask } = useModal()
+const { modalVisible } = useModal()
+
+const { addTask } = useTasksStore()
+
+const form = ref<HTMLFormElement | null>(null)
+const newTask = shallowReactive<Omit<Task, 'id'>>({
+  name: '',
+  description: '',
+  status: 'todo',
+  type: 'task',
+  priority: 'low'
+})
 
 const updatePriority = (priority: keyof typeof TASK_PRIORITY) => {
-  if (!selectedTask.value) return
-  selectedTask.value.priority = priority
+  newTask.priority = priority
 }
 
 const updateStatus = (status: keyof typeof TASK_TYPE) => {
-  if (!selectedTask.value) return
-  selectedTask.value.status = status
+  newTask.status = status
 }
 
-const handleSave = () => {
-  if (!selectedTask.value) return
-  useTasksStore().updateTask(selectedTask.value)
+const resetForm = () => {
+  newTask.name = ''
+  newTask.description = ''
+  newTask.status = 'todo'
+  newTask.priority = 'low'
+}
+
+const addNewTask = () => {
+  if (!form.value?.checkValidity()) return
+  addTask(newTask)
+  resetForm()
+  modalVisible.value = false
 }
 </script>
 <template>
-  <form class="task-info" v-if="selectedTask" @submit.prevent>
+  <form v-if="modalVisible" class="task-info" ref="form" @submit.prevent>
     <header class="task-info__header">
-      <InputField v-model="selectedTask.name" placeholder="Nombre de la tarea" />
+      <InputField v-model="newTask.name" placeholder="Nombre de la tarea" />
       <span class="task-info__options"></span>
     </header>
     <div class="task-info__content">
       <TextAreaField
-        v-model="selectedTask.description"
+        v-model="newTask.description"
         placeholder="Descripción de la tarea"
       ></TextAreaField>
     </div>
     <div class="task-info__selectors">
-      <ProgressSelector
-        :progress="selectedTask.status"
-        @update-status="updateStatus"
-      ></ProgressSelector>
-      <PrioritySelector :priority="selectedTask.priority" @update-priority="updatePriority" />
+      <ProgressSelector :progress="newTask.status" @update-status="updateStatus"></ProgressSelector>
+      <PrioritySelector :priority="newTask.priority" @update-priority="updatePriority" />
     </div>
     <footer class="task-info__footer">
-      <MainButton @click="handleSave">Guardar</MainButton>
+      <MainButton @click="addNewTask">Guardar</MainButton>
     </footer>
   </form>
 </template>

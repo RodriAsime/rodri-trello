@@ -3,10 +3,11 @@ import type { Component } from 'vue'
 import type { Task } from '@/interfaces/task'
 
 const TaskInfo = defineAsyncComponent(() => import('@/components/modals/TaskInfo.vue'))
+const TaskEntry = defineAsyncComponent(() => import('@/components/modals/TaskEntry.vue'))
 
-export const modalVisible = ref(false)
-export const selectedTask = ref<Task | null>(null)
-export const slotTarget = shallowRef<Component | null>(null)
+const modalVisible = ref(false)
+const selectedTask = ref<Task | null>(null)
+const slotTarget = shallowRef<Component | null>(null)
 
 async function toogleModal() {
   const teleportModal = document.getElementById('modal')
@@ -21,14 +22,29 @@ async function toogleModal() {
   }
 }
 
-export function openInfoModal(props: Task) {
-  selectedTask.value = props
-  slotTarget.value = TaskInfo
-  toogleModal()
-}
+export function useModal() {
+  function openInfoModal(props: Task) {
+    selectedTask.value = props
+    slotTarget.value = TaskInfo
+    toogleModal()
+  }
 
-export function closeModal(event: MouseEvent) {
-  if (!(event.target instanceof HTMLElement)) return
-  toogleModal()
-  slotTarget.value = null
+  function openEntryModal() {
+    slotTarget.value = TaskEntry
+    toogleModal()
+  }
+  function closeModal(event: MouseEvent) {
+    if (!(event.target instanceof HTMLElement)) return
+    toogleModal()
+    slotTarget.value = null
+  }
+
+  return {
+    modalVisible,
+    selectedTask,
+    slotTarget,
+    openInfoModal,
+    closeModal,
+    openEntryModal
+  }
 }

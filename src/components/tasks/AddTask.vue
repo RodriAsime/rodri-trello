@@ -2,17 +2,19 @@
 import { TASK_TYPE } from '@/constants/task'
 import PlusIcon from '../icons/PlusIcon.vue'
 import { drop } from '@/utils/dragAndDrop'
-import { useTasksStore } from '@/stores/tasks'
+import { useModal } from '@/composables/modal'
 defineProps<{
   title: keyof typeof TASK_TYPE
 }>()
+
+const { openEntryModal } = useModal()
 </script>
 <template>
   <article
     class="add-task"
     @dragover.prevent
     @drop.prevent="drop({ ev: $event, title: title })"
-    @click="useTasksStore().addTask(title)"
+    @click="openEntryModal"
   >
     <PlusIcon class="add-task__icon"></PlusIcon>
   </article>

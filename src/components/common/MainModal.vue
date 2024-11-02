@@ -1,5 +1,7 @@
 <script setup lang="ts">
-import { closeModal, modalVisible, slotTarget } from '@/composables/modal'
+import { useModal } from '@/composables/modal'
+
+const { closeModal, modalVisible, slotTarget } = useModal()
 </script>
 <template>
   <Teleport to="#modal">
