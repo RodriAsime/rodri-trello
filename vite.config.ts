@@ -11,5 +11,5 @@ export default defineConfig({
       '@': fileURLToPath(new URL('./src', import.meta.url))
     }
   },
-  base: '/rodri-trello/'
+  base: process.env.NODE_ENV === 'development' ? '/' : '/rodri-trello/'
 })
