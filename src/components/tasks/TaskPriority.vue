@@ -16,7 +16,7 @@ const priorityClass = computed(() => {
 })
 </script>
 <template>
-  <span class="priority" :class="priorityClass"></span>
+  <span :class="['priority', priorityClass]"></span>
 </template>
 
 <style scoped>
