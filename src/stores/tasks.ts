@@ -119,6 +119,7 @@ export const useTasksStore = defineStore('tasks', () => {
     removeTask,
     updateTask,
     updateTaskStatus,
+    getTaskIndexById,
     orderTasks
   }
 })
